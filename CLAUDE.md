@@ -178,6 +178,20 @@ Before pushing to remote or opening a pull request, **always** ensure the branch
 
 This ensures PRs are always up-to-date and minimizes merge conflicts.
 
+## Config Sync
+
+This file and the surrounding config (`settings.json`, `agents/`, `skills/`, `commands/`) are backed up to `~/Developer/claude-config/` (repo: `Iron-Ham/claude-config`). They are symlinked into `~/.claude/`.
+
+- After modifying any of these files, **commit and push** the changes:
+  ```
+  cd ~/Developer/claude-config && git add -A && git commit -m "chore: <describe change>" && git push
+  ```
+- On a new machine, clone and run `setup.sh` to restore symlinks:
+  ```
+  git clone git@github.com:Iron-Ham/claude-config.git ~/Developer/claude-config
+  cd ~/Developer/claude-config && ./setup.sh
+  ```
+
 ## Testing Requirements
 
 - Write tests for new functionality when a test suite exists in the project
