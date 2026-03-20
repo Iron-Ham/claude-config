@@ -1,0 +1,18 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "deep-review@claude-deep-review": true,
+    "preview-build@preview-build": true,
+    "split@split": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "teammateMode": "in-process"
+}

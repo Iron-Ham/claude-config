@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Plugin marketplace metadata
+.claude-plugin/
+
+# OS
+.DS_Store
