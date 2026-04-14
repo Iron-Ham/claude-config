@@ -11,20 +11,13 @@
     "preview-build@preview-build": true,
     "split@split": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "impeccable@impeccable": true,
-    "mempalace@mempalace": true
+    "impeccable@impeccable": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
       "source": {
         "source": "github",
         "repo": "pbakaus/impeccable"
-      }
-    },
-    "mempalace": {
-      "source": {
-        "source": "github",
-        "repo": "milla-jovovich/mempalace"
       }
     }
   },
