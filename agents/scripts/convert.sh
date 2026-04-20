@@ -12,12 +12,13 @@
 # Tools:
 #   antigravity  — Antigravity skill files (~/.gemini/antigravity/skills/)
 #   gemini-cli   — Gemini CLI extension (skills/ + gemini-extension.json)
-#   opencode     — OpenCode agent files (.opencode/agent/*.md)
+#   opencode     — OpenCode agent files (.opencode/agents/*.md)
 #   cursor       — Cursor rule files (.cursor/rules/*.mdc)
 #   aider        — Single CONVENTIONS.md for Aider
 #   windsurf     — Single .windsurfrules for Windsurf
-#   openclaw     — OpenClaw SOUL.md files (openclaw_workspace/<agent>/SOUL.md)
+#   openclaw     — OpenClaw workspaces (integrations/openclaw/<agent>/SOUL.md)
 #   qwen         — Qwen Code SubAgent files (~/.qwen/agents/*.md)
+#   kimi         — Kimi Code CLI agent files (~/.config/kimi/agents/)
 #   all          — All tools (default)
 #
 # Output is written to integrations/<tool>/ relative to the repo root.
@@ -61,8 +62,8 @@ OUT_DIR="$REPO_ROOT/integrations"
 TODAY="$(date +%Y-%m-%d)"
 
 AGENT_DIRS=(
-  academic design engineering game-development marketing paid-media sales product project-management
-  testing support spatial-computing specialized
+  academic design engineering finance game-development marketing paid-media product project-management
+  sales spatial-computing specialized strategy support testing
 )
 
 # --- Usage ---
@@ -263,8 +264,8 @@ convert_openclaw() {
   # Split body sections into SOUL.md (persona) vs AGENTS.md (operations)
   # by matching ## header keywords. Unmatched sections go to AGENTS.md.
   #
-  # SOUL keywords: identity, memory (paired with identity), communication,
-  #   style, critical rules, rules you must follow
+  # SOUL keywords: identity, learning & memory, communication, style,
+  #   critical rules, rules you must follow
   # AGENTS keywords: everything else (mission, deliverables, workflow, etc.)
 
   local current_target="agents"  # default bucket
@@ -288,6 +289,7 @@ convert_openclaw() {
       header_lower="$(echo "$line" | tr '[:upper:]' '[:lower:]')"
 
       if [[ "$header_lower" =~ identity ]] ||
+         [[ "$header_lower" =~ learning.*memory ]] ||
          [[ "$header_lower" =~ communication ]] ||
          [[ "$header_lower" =~ style ]] ||
          [[ "$header_lower" =~ critical.rule ]] ||
@@ -371,6 +373,39 @@ description: ${description}
 ${body}
 HEREDOC
   fi
+}
+
+convert_kimi() {
+  local file="$1"
+  local name description slug outdir agent_file body
+
+  name="$(get_field "name" "$file")"
+  description="$(get_field "description" "$file")"
+  slug="$(slugify "$name")"
+  body="$(get_body "$file")"
+
+  outdir="$OUT_DIR/kimi/$slug"
+  agent_file="$outdir/agent.yaml"
+  mkdir -p "$outdir"
+
+  # Kimi Code CLI agent format: YAML with separate system prompt file
+  # Uses extend: default to inherit Kimi's default toolset
+  cat > "$agent_file" <<HEREDOC
+version: 1
+agent:
+  name: ${slug}
+  extend: default
+  system_prompt_path: ./system.md
+HEREDOC
+
+  # Write system prompt to separate file
+  cat > "$outdir/system.md" <<HEREDOC
+# ${name}
+
+${description}
+
+${body}
+HEREDOC
 }
 
 # Aider and Windsurf are single-file formats — accumulate into temp files
@@ -470,6 +505,7 @@ run_conversions() {
         cursor)      convert_cursor      "$file" ;;
         openclaw)    convert_openclaw    "$file" ;;
         qwen)        convert_qwen        "$file" ;;
+        kimi)        convert_kimi        "$file" ;;
         aider)       accumulate_aider    "$file" ;;
         windsurf)    accumulate_windsurf "$file" ;;
       esac
@@ -500,7 +536,7 @@ main() {
     esac
   done
 
-  local valid_tools=("antigravity" "gemini-cli" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen" "all")
+  local valid_tools=("antigravity" "gemini-cli" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen" "kimi" "all")
   local valid=false
   for t in "${valid_tools[@]}"; do [[ "$t" == "$tool" ]] && valid=true && break; done
   if ! $valid; then
@@ -519,7 +555,7 @@ main() {
 
   local tools_to_run=()
   if [[ "$tool" == "all" ]]; then
-    tools_to_run=("antigravity" "gemini-cli" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen")
+    tools_to_run=("antigravity" "gemini-cli" "opencode" "cursor" "aider" "windsurf" "openclaw" "qwen" "kimi")
   else
     tools_to_run=("$tool")
   fi
