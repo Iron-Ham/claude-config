@@ -14,6 +14,8 @@ supported agentic coding tools.
 - **[Cursor](#cursor)** — `.mdc` rule files in `cursor/`
 - **[Aider](#aider)** — `CONVENTIONS.md` in `aider/`
 - **[Windsurf](#windsurf)** — `.windsurfrules` in `windsurf/`
+- **[Kimi Code](#kimi-code)** — YAML agent specs in `kimi/`
+- **[Qwen Code](#qwen-code)** — project-scoped `.md` SubAgents in `.qwen/agents/`
 
 ## Quick Install
 
@@ -30,9 +32,20 @@ supported agentic coding tools.
 # Gemini CLI needs generated integration files on a fresh clone
 ./scripts/convert.sh --tool gemini-cli
 ./scripts/install.sh --tool gemini-cli
+
+# Qwen Code also needs generated SubAgent files on a fresh clone
+./scripts/convert.sh --tool qwen
+./scripts/install.sh --tool qwen
 ```
 
-For project-scoped tools such as OpenCode, Cursor, Aider, and Windsurf, run
+If you install OpenClaw and the gateway is already running, restart it after installation:
+
+```bash
+openclaw gateway restart
+```
+
+For project-scoped tools such as OpenCode, Cursor, Aider, Windsurf, and Qwen
+Code, run
 the installer from your target project root as shown in the tool-specific
 sections below.
 
@@ -172,3 +185,56 @@ cd /your/project && /path/to/agency-agents/scripts/install.sh --tool windsurf
 ```
 
 See [windsurf/README.md](windsurf/README.md) for details.
+
+---
+
+## Kimi Code
+
+Each agent is converted to a Kimi Code CLI agent specification (YAML format with
+separate system prompt files). Agents are installed to `~/.config/kimi/agents/`.
+
+Because the Kimi agent files are generated from the source Markdown, run
+`./scripts/convert.sh --tool kimi` before installing from a fresh clone.
+
+```bash
+./scripts/convert.sh --tool kimi
+./scripts/install.sh --tool kimi
+```
+
+### Usage
+
+After installation, use an agent with the `--agent-file` flag:
+
+```bash
+kimi --agent-file ~/.config/kimi/agents/frontend-developer/agent.yaml
+```
+
+Or in a specific project:
+
+```bash
+cd /your/project
+kimi --agent-file ~/.config/kimi/agents/frontend-developer/agent.yaml \
+     --work-dir /your/project
+```
+
+See [kimi/README.md](kimi/README.md) for details.
+
+---
+
+## Qwen Code
+
+Each agent becomes a project-scoped `.md` SubAgent file in `.qwen/agents/`.
+
+From a fresh clone, generate the Qwen files first:
+
+```bash
+./scripts/convert.sh --tool qwen
+```
+
+Then install them from your project root:
+
+```bash
+cd /your/project && /path/to/agency-agents/scripts/install.sh --tool qwen
+```
+
+See [qwen/README.md](qwen/README.md) for details.
