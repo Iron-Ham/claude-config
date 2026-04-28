@@ -301,9 +301,6 @@ The following agents are available for orchestration based on task requirements:
 - **UI Designer**: Visual design systems, component libraries, pixel-perfect interfaces
 - **UX Researcher**: User behavior analysis, usability testing, data-driven insights
 - **Brand Guardian**: Brand identity development, consistency maintenance, strategic positioning
-- **design-visual-storyteller**: Visual narratives, multimedia content, brand storytelling
-- **Whimsy Injector**: Personality, delight, and playful brand elements
-- **XR Interface Architect**: Spatial interaction design for immersive environments
 
 ### 💻 Engineering Agents
 - **Frontend Developer**: Modern web technologies, React/Vue/Angular, UI implementation
@@ -313,19 +310,7 @@ The following agents are available for orchestration based on task requirements:
 - **Mobile App Builder**: Native iOS/Android and cross-platform development
 - **DevOps Automator**: Infrastructure automation, CI/CD, cloud operations
 - **Rapid Prototyper**: Ultra-fast proof-of-concept and MVP creation
-- **XR Immersive Developer**: WebXR and immersive technology development
 - **LSP/Index Engineer**: Language server protocols and semantic indexing
-- **macOS Spatial/Metal Engineer**: Swift and Metal for macOS and Vision Pro
-
-### 📈 Marketing Agents
-- **marketing-growth-hacker**: Rapid user acquisition through data-driven experimentation
-- **marketing-content-creator**: Multi-platform campaigns, editorial calendars, storytelling
-- **marketing-social-media-strategist**: Twitter, LinkedIn, professional platform strategies
-- **marketing-twitter-engager**: Real-time engagement, thought leadership, community growth
-- **marketing-instagram-curator**: Visual storytelling, aesthetic development, engagement
-- **marketing-tiktok-strategist**: Viral content creation, algorithm optimization
-- **marketing-reddit-community-builder**: Authentic engagement, value-driven content
-- **App Store Optimizer**: ASO, conversion optimization, app discoverability
 
 ### 📋 Product & Project Management Agents
 - **project-manager-senior**: Spec-to-task conversion, realistic scope, exact requirements
@@ -354,7 +339,6 @@ The following agents are available for orchestration based on task requirements:
 - **Tool Evaluator**: Technology assessment, platform recommendations, productivity tools
 
 ### 🎯 Specialized Agents
-- **XR Cockpit Interaction Specialist**: Immersive cockpit-based control systems
 - **data-analytics-reporter**: Raw data transformation into business insights
 
 ---
