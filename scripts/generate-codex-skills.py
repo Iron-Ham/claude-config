@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shutil
@@ -157,7 +158,7 @@ def render_skill(metadata: dict[str, str], body: str) -> str:
         [
             "---",
             f"name: {metadata['name']}",
-            f"description: {metadata['description']}",
+            f"description: {json.dumps(metadata['description'], ensure_ascii=False)}",
             "---",
             "",
             body,
