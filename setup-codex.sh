@@ -8,6 +8,8 @@ REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 CODEX_DIR="${CODEX_HOME:-$HOME/.codex}"
 CODEX_AGENTS_DIR="$CODEX_DIR/agents"
 CODEX_SKILLS_DIR="$HOME/.agents/skills"
+CODEX_BACKUP_DIR="$CODEX_DIR/backups/setup-codex"
+AGENTS_BACKUP_DIR="$HOME/.agents/backups/setup-codex"
 
 backup_timestamp() {
   date +%Y%m%d%H%M%S
@@ -17,6 +19,7 @@ link_item() {
   local src="$1"
   local dest="$2"
   local label="$3"
+  local backup_dir="$4"
 
   if [ ! -e "$src" ]; then
     echo "SKIP  $label (not in repo)"
@@ -24,7 +27,8 @@ link_item() {
   fi
 
   if [ -e "$dest" ] && [ ! -L "$dest" ]; then
-    local backup="$dest.bak.$(backup_timestamp)"
+    mkdir -p "$backup_dir"
+    local backup="$backup_dir/$(basename "$dest").bak.$(backup_timestamp)"
     echo "BACKUP $dest -> $backup"
     mv "$dest" "$backup"
   fi
@@ -45,13 +49,13 @@ link_item() {
 
 mkdir -p "$CODEX_DIR" "$CODEX_AGENTS_DIR" "$CODEX_SKILLS_DIR"
 
-link_item "$REPO_DIR/AGENTS.md" "$CODEX_DIR/AGENTS.md" "AGENTS.md"
+link_item "$REPO_DIR/AGENTS.md" "$CODEX_DIR/AGENTS.md" "AGENTS.md" "$CODEX_BACKUP_DIR"
 
 if [ -d "$REPO_DIR/codex/agents" ]; then
   for src in "$REPO_DIR"/codex/agents/*.toml; do
     [ -e "$src" ] || continue
     name="$(basename "$src")"
-    link_item "$src" "$CODEX_AGENTS_DIR/$name" "codex agent $name"
+    link_item "$src" "$CODEX_AGENTS_DIR/$name" "codex agent $name" "$CODEX_BACKUP_DIR/agents"
   done
 fi
 
@@ -65,7 +69,7 @@ if [ -d "$SKILLS_SOURCE_DIR" ]; then
     [ -d "$src" ] || continue
     [ -f "$src/SKILL.md" ] || continue
     name="$(basename "$src")"
-    link_item "$src" "$CODEX_SKILLS_DIR/$name" "skill $name"
+    link_item "$src" "$CODEX_SKILLS_DIR/$name" "skill $name" "$AGENTS_BACKUP_DIR/skills"
   done
 fi
 
