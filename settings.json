@@ -11,7 +11,8 @@
     "preview-build@preview-build": true,
     "split@split": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "impeccable@impeccable": true
+    "impeccable@impeccable": true,
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {

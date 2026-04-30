@@ -46,6 +46,16 @@ SPECIAL_REPLACEMENTS = {
             'SPLIT_SCRIPT="$HOME/.agents/skills/split/scripts/split_diff.py"',
         ),
     ],
+    "rebase-stack": [
+        (
+            "You are executing the `/rebase-stack` skill.",
+            "You are executing the `$rebase-stack` skill.",
+        ),
+        (
+            "The skill runner populates `$ARGUMENTS` with everything after `/rebase-stack`.",
+            "Treat the user's prompt after `$rebase-stack` as the argument string.",
+        ),
+    ],
     "impeccable": [
         (
             "If neither source has context, you MUST run $impeccable teach NOW before doing anything else.",
@@ -162,7 +172,7 @@ def relative_symlink_target(source: Path, destination: Path) -> str:
 
 def link_resources(source_dir: Path, destination_dir: Path) -> None:
     for source in source_dir.iterdir():
-        if source.name == "SKILL.md":
+        if source.name in {"SKILL.md", ".claude-plugin"}:
             continue
         destination = destination_dir / source.name
         if destination.exists() or destination.is_symlink():
