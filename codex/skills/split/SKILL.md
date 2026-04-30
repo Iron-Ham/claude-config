@@ -1,6 +1,6 @@
 ---
 name: split
-description: Split a large branch into N stacked logical branches with hunk-level granularity
+description: "Split a large branch into N stacked logical branches with hunk-level granularity"
 ---
 
 # Split Branch into Stacked Logical Branches

@@ -60,7 +60,7 @@ def codex_name(display_name: str) -> str:
 
 
 def toml_string(value: str) -> str:
-    return json.dumps(value, ensure_ascii=True)
+    return json.dumps(value, ensure_ascii=False)
 
 
 def source_name(source: Path, repo_root: Path) -> str:

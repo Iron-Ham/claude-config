@@ -1,6 +1,6 @@
 ---
 name: rebase-stack
-description: Rebase an entire stack of PRs against the latest base branch, cascading changes through every branch using git rebase --onto
+description: "Rebase an entire stack of PRs against the latest base branch, cascading changes through every branch using git rebase --onto"
 ---
 
 # Rebase a Stack of PRs
