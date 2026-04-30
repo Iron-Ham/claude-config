@@ -7,7 +7,8 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
 
-# Items to symlink: source (relative to repo) -> target (relative to ~/.claude/)
+# Items to symlink: source (relative to repo) -> target (relative to ~/.claude/).
+# CLAUDE.md is a repo-local symlink to AGENTS.md.
 ITEMS=(
   "CLAUDE.md"
   "settings.json"
